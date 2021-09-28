@@ -1,6 +1,6 @@
 """
 Project: Snake with pygame
-Version: 1.0
+Version: 1.1
 Author: Harry West
 Date: 09/2019
 """
@@ -140,15 +140,7 @@ def drawBackground(width, height):
                 pygame.draw.rect(window, (76, 145, 166), (w, h, width / 20, height / 20))
 
 
-if __name__ == '__main__':
-    # Initialises pygame
-    pygame.init()
-
-    # Sets the screen size and creates a window
-    size = screenWidth, screenHeight = (500, 500)
-    window = pygame.display.set_mode(size)
-    pygame.display.set_caption("Snake")
-
+def main():
     # Creates the snake and fruits objects
     s = snake(screenHeight, screenWidth)
     fruits = [fruit(screenWidth, screenHeight)]
@@ -174,6 +166,7 @@ if __name__ == '__main__':
         # Checks if a key was pressed
         keys = pygame.key.get_pressed()
         # If a certain key was pressed and the snake can travel in that direction
+
         if keys[pygame.K_UP] and s.direction != "DOWN":
             # Sets the snake direction
             s.direction = "UP"
@@ -183,6 +176,8 @@ if __name__ == '__main__':
             s.direction = "LEFT"
         elif keys[pygame.K_RIGHT] and s.direction != "LEFT":
             s.direction = "RIGHT"
+
+        pygame.event.pump()
 
         # Moves the snake
         s.move()
@@ -224,3 +219,16 @@ if __name__ == '__main__':
     # Opens a popup box to show the final score if the game is lost. wm_withdraw() prevents a tk window opening
     Tk().wm_withdraw()
     messagebox.showinfo("Game Over", "Better Luck Next Time!\nYou scored: " + str(s.length - 1))
+    pygame.quit()
+
+
+if __name__ == '__main__':
+    while True:
+        # Initialises pygame
+        pygame.init()
+
+        # Sets the screen size and creates a window
+        size = screenWidth, screenHeight = (500, 500)
+        window = pygame.display.set_mode(size)
+        pygame.display.set_caption("Snake")
+        main()
